@@ -51,7 +51,7 @@
 //   );
 // }
 
-
+// http://localhost:8000/get-rishta
 
 
 // components/RishtaForm.tsx
@@ -81,7 +81,7 @@ export default function RishtaForm() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/get-rishta", {
+      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/get-rishta", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
