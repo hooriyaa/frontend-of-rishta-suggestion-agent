@@ -81,17 +81,23 @@ export default function RishtaForm() {
     setLoading(true);
 
     try {
-      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/get-rishta", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-rishta`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+
       const data = await res.json();
-      toast.success("Rishta response received!", {
+      toast.success("Rishta response received! 💌", {
         description: data.response,
       });
-    } catch {
-      toast.error("Failed to get rishta.");
+    } catch (err) {
+      console.error("❌ API error:", err);
+      toast.error("Failed to get rishta. Please try again later.");
     } finally {
       setLoading(false);
     }
