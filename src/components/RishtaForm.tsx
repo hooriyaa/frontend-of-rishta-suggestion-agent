@@ -52,9 +52,8 @@
 // }
 
 // http://localhost:8000/get-rishta
+// const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-rishta`, {
 
-
-// components/RishtaForm.tsx
 "use client";
 import React, { useState } from "react";
 import FormWrapper from "./FormWrapper";
@@ -67,11 +66,12 @@ export default function RishtaForm() {
     age: "",
     phone: "",
     message: "",
+    gender: "",
   });
   const [loading, setLoading] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -107,7 +107,7 @@ export default function RishtaForm() {
     <FormWrapper>
       <Toaster />
       <h2 className="text-2xl font-bold text-[#ffffff] text-center flex items-center justify-center gap-2">
-        💍 Rishtey Wali Auntie Form
+        💍 Rishtey Wali Auntie Form
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4 w-full">
@@ -125,6 +125,26 @@ export default function RishtaForm() {
           onChange={handleChange}
           placeholder="e.g. 923001234567"
         />
+
+        {/* Gender Dropdown */}
+        <div className="space-y-1">
+          <label htmlFor="gender" className="block text-sm font-medium text-[#F1F5F9] pr-0.5">
+            Gender
+          </label>
+          <select
+            id="gender"
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            required
+            className="w-full rounded-md bg-[#1E293B] border border-[#7C3AED] text-[#F1F5F9] placeholder:text-gray-400 focus:ring-[#7C3AED] focus:border-[#7C3AED] p-2"
+          >
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
         <FormField
           id="message"
           label="Message"
@@ -139,7 +159,7 @@ export default function RishtaForm() {
           disabled={loading}
           className="w-full bg-[#9333EA] hover:bg-[#7C3AED] text-white font-semibold transition-colors"
         >
-          {loading ? "Sending..." : "Find My Rishta"}
+          {loading ? "Sending..." : "Find My Rishta"}
         </Button>
       </form>
     </FormWrapper>
